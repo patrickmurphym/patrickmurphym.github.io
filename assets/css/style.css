@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+  color: #333;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* other text elements to use Montserrat */
+h1, h2, h3, h4, h5, h6, p, a, span, li, blockquote {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .profile-pic {
   position: relative;
   max-width:130px;
@@ -29,7 +41,7 @@
 }
 
 /* @import url(https://fonts.googleapis.com/css?family=Poiret+One); */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .social {
   margin: 0 auto;
   width: auto;
