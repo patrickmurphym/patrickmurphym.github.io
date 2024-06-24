@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li, blockquote {
   background: #fff;
   color: #00796b;
   border: 2px solid #fff;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 15px;
   letter-spacing: 1px;
   display: inline-block;
@@ -119,7 +119,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li, blockquote {
   background: none;
   color: #fff;
   border: 2px solid #fff;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 15px;
   letter-spacing: 1px;
   display: inline-block;
