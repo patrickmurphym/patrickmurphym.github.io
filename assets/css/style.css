@@ -332,14 +332,6 @@ h3 {
   position: relative;
 } */
 
-#intro {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh; /* Full viewport height */
-  position: relative;
-}
-
 #intro.section {
   background: #009fff repeat;
   position: relative;
