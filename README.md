@@ -1,5 +1,8 @@
 # Personal Portfolio ⚡️ 
-> A clean, beautiful, responsive portfolio template for Software Developers!
+
+> Below is the original description of the project/template this website is based on.
+
+A clean, beautiful, responsive portfolio template for Software Developers!
 
 > https://varadbhogayata.github.io
 
