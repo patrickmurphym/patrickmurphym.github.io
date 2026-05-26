@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Patrick Murphy | Financial Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e45;
+    --navy-light: #243b55;
+    --slate: #354f6e;
+    --accent: #4ecdc4;
+    --accent-dim: #2a9d94;
+    --accent-pale: rgba(78,205,196,0.12);
+    --gold: #f4a261;
+    --gold-dim: #e08c50;
+    --text-primary: #e8edf2;
+    --text-secondary: #8fa4bc;
+    --text-muted: #5a7390;
+    --card-bg: rgba(26,46,69,0.6);
+    --card-border: rgba(78,205,196,0.15);
+    --card-border-hover: rgba(78,205,196,0.4);
+    --sidebar-w: 240px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(78,205,196,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(78,205,196,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glow blob */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(78,205,196,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: rgba(13,27,42,0.92);
+    border-right: 1px solid var(--card-border);
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-dim), var(--navy-light));
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  .sidebar-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar-role {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    flex: 1;
+  }
+
+  .sidebar-nav li { margin-bottom: 0.15rem; }
+
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  .sidebar-nav a:hover,
+  .sidebar-nav a.active {
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  .sidebar-nav a .nav-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .sidebar-nav a:hover .nav-dot,
+  .sidebar-nav a.active .nav-dot {
+    background: var(--accent);
+  }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    gap: 0.65rem;
+  }
+
+  .social-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+  }
+
+  .social-icon:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    margin-left: var(--sidebar-w);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HERO ─── */
+  #intro {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 5rem 4rem;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-tagline {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+    font-weight: 300;
+  }
+
+  .hero-typed-wrap {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    min-height: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: var(--gold);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--navy);
+  }
+
+  .btn-primary:hover {
+    background: #5ee8df;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--card-border-hover);
+    color: var(--text-primary);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 3rem;
+    right: 5rem;
+    display: flex;
+    gap: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 1s forwards;
+  }
+
+  .hero-stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-stat-num span { color: var(--accent); }
+
+  .hero-stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section {
+    padding: 5rem 5rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .about-text p + p { margin-top: 1.25rem; }
+
+  .skills-inline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .skill-chip {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .skill-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  .skill-chip .chip-cat {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    opacity: 0.4;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .timeline-item:hover {
+    border-color: var(--card-border-hover);
+    transform: translateX(4px);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 1.75rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--navy);
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.2);
+  }
+
+  .timeline-org {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-role {
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 1rem;
+  }
+
+  .timeline-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .timeline-list li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.4rem;
+    font-weight: 300;
+  }
+
+  .timeline-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 0.1rem;
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .project-card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-3px);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    background: var(--accent-pale);
+    color: var(--accent);
+    border: 1px solid rgba(78,205,196,0.2);
+    width: fit-content;
+  }
+
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    flex: 1;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tech-pill {
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .project-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: gap 0.2s;
+    margin-top: auto;
+  }
+
+  .project-link:hover { gap: 0.6rem; }
+
+  /* ─── SKILLS ─── */
+  .skills-section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skill-group {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s;
+  }
+
+  .skill-group:hover { border-color: var(--card-border-hover); }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .skill-item:last-child { border-bottom: none; }
+
+  .skill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .skill-name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .edu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(78,205,196,0.08) 0%, transparent 70%);
+  }
+
+  .edu-card:hover { border-color: var(--card-border-hover); }
+
+  .edu-school {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .edu-location {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  .edu-degree {
+    font-size: 0.88rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+    font-weight: 400;
+  }
+
+  .edu-meta {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .edu-courses-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .edu-courses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .course-tag {
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding-bottom: 8rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 640px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+  }
+
+  .contact-item:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+    background: rgba(78,205,196,0.06);
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--accent-pale);
+    border: 1px solid rgba(78,205,196,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .contact-label {
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-value {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── MOBILE TOGGLE ─── */
+  .mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: var(--navy-mid);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--card-border), transparent);
+    margin: 0 5rem;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--slate); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    :root { --sidebar-w: 200px; }
+    #intro, section { padding-left: 3rem; padding-right: 3rem; }
+    .hero-stats { right: 3rem; }
+    .section-divider { margin: 0 3rem; }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
+    main { margin-left: 0; }
+    .mobile-nav-toggle { display: flex; }
+    #intro { padding: 6rem 2rem 4rem; }
+    section { padding: 3.5rem 2rem; }
+    .about-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { position: static; margin-top: 2.5rem; }
+    .section-divider { margin: 0 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mobile-nav-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation">☰</button>
+
+<nav class="sidebar">
+  <div class="sidebar-avatar">PM</div>
+  <div class="sidebar-name">Patrick Murphy</div>
+  <div class="sidebar-role">Financial Engineer</div>
+
+  <ul class="sidebar-nav">
+    <li><a href="#intro" class="active"><span class="nav-dot"></span>Home</a></li>
+    <li><a href="#about"><span class="nav-dot"></span>About</a></li>
+    <li><a href="#experience"><span class="nav-dot"></span>Experience</a></li>
+    <li><a href="#projects"><span class="nav-dot"></span>Projects</a></li>
+    <li><a href="#skills"><span class="nav-dot"></span>Skills</a></li>
+    <li><a href="#education"><span class="nav-dot"></span>Education</a></li>
+    <li><a href="#contact"><span class="nav-dot"></span>Contact</a></li>
+    <li><a href="https://drive.google.com/file/d/1QM9CRz4XiA-Ey8qTvdzxLQ0lBqxjt8s8/view?usp=sharing" target="_blank"><span class="nav-dot"></span>Resume ↗</a></li>
+  </ul>
+
+  <div class="sidebar-bottom">
+    <a href="http://linkedin.com/in/patrick-james-murphy" target="_blank" class="social-icon" title="LinkedIn">in</a>
+    <a href="https://github.com/patrickmurphym" target="_blank" class="social-icon" title="GitHub">gh</a>
+    <a href="mailto:patrick.murphy@nyu.edu" class="social-icon" title="Email">@</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ─── HERO ─── -->
+  <section id="intro">
+    <div class="hero-eyebrow">Financial Engineer · NYC</div>
+    <h1 class="hero-name">Patrick<br><em>Murphy.</em></h1>
+    <div class="hero-typed-wrap"><span id="typed-text"></span><span class="cursor"></span></div>
+    <p class="hero-tagline">Financial engineer bridging loan servicing and quantitative analytics. Building models that transform data into decision-relevant insight.</p>
+    <div class="hero-cta">
+      <a href="#about" class="btn btn-primary">Explore my work</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">3.8<span>/4.0</span></div>
+        <div class="hero-stat-label">NYU GPA</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4<span>+</span></div>
+        <div class="hero-stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3<span></span></div>
+        <div class="hero-stat-label">ML Projects</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="section-label">01 — About</div>
+    <h2 class="section-title">The full picture.</h2>
+    <div class="about-grid reveal">
+      <div>
+        <p class="about-text">I'm a Financial Engineer with an M.S. from NYU Tandon School of Engineering and a B.S. in Industrial and Computer Engineering from Universidad Adolfo Ibáñez. My work sits at the intersection of quantitative finance, machine learning, and data engineering.</p>
+        <p class="about-text" style="margin-top:1.25rem">Currently in loan servicing, I focus on automating portfolio reporting, building credit analytics tools, and developing early-warning scoring systems — actively bridging toward quantitative credit analysis roles.</p>
+        <p class="about-text" style="margin-top:1.25rem">Proficient in Python, R, SQL, and Excel, I've applied NLP, ARIMA modeling, and RAG-based LLM pipelines to real financial problems.</p>
+      </div>
+      <div>
+        <div class="skills-inline-grid">
+          <div class="skill-chip"><span class="chip-cat">Core</span>Python · Pandas · NumPy</div>
+          <div class="skill-chip"><span class="chip-cat">Analytics</span>R · SQL · Excel</div>
+          <div class="skill-chip"><span class="chip-cat">ML / AI</span>scikit-learn · TensorFlow · NLP</div>
+          <div class="skill-chip"><span class="chip-cat">Finance</span>Financial Modeling · ARIMA</div>
+          <div class="skill-chip"><span class="chip-cat">Databases</span>MySQL · PostgreSQL · MongoDB</div>
+          <div class="skill-chip"><span class="chip-cat">Tools</span>Git · LaTeX · Bloomberg</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── EXPERIENCE ─── -->
+  <section id="experience">
+    <div class="section-label">02 — Experience</div>
+    <h2 class="section-title">Where I've worked.</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">NYU Tandon School of Engineering</div>
+        <div class="timeline-role">Graduate Assistant, Office of Graduate Admissions</div>
+        <div class="timeline-date">Sep 2022 – May 2024 · Brooklyn, NY</div>
+        <ul class="timeline-list">
+          <li>Managed phone inquiries and served as liaison between prospective students and the admissions office.</li>
+          <li>Drafted daily communications covering admissions processes with clarity and precision.</li>
+          <li>Handled sensitive student documents — transcripts and academic records — with confidentiality and accuracy.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">Universidad Adolfo Ibáñez</div>
+        <div class="timeline-role">Teaching Assistant, Finance and Mathematics Department</div>
+        <div class="timeline-date">Mar 2019 – Jun 2022 · Viña del Mar, Chile</div>
+        <ul class="timeline-list">
+          <li>Designed weekly course materials and exercises in LaTeX across Financial Management, Linear Algebra, Differential Equations, and Multivariable Calculus.</li>
+          <li>Conducted monthly assessments to evaluate student comprehension and progress.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">UAI Engineering Student Center</div>
+        <div class="timeline-role">President & Coordinator</div>
+        <div class="timeline-date">Apr 2020 – Nov 2021 · Viña del Mar, Chile</div>
+        <ul class="timeline-list">
+          <li>Presided over the Student Council representing engineering students at Adolfo Ibáñez University.</li>
+          <li>Maintained communication between student body and university authorities during the COVID-19 pandemic.</li>
+          <li>Managed project execution and budget allocation across multiple committees.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">SILABUZ.COM</div>
+        <div class="timeline-role">CodeCamp Tutor</div>
+        <div class="timeline-date">Nov 2018 – Jan 2019 · Viña del Mar, Chile</div>
+        <ul class="timeline-list">
+          <li>Mentored economically vulnerable high school students in entrepreneurship and technology skills.</li>
+          <li>Guided students in developing prototypes using Design Thinking methodologies.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── PROJECTS ─── -->
+  <section id="projects">
+    <div class="section-label">03 — Projects</div>
+    <h2 class="section-title">Things I've built.</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-tag">NLP · LLM</div>
+        <div class="project-title">AI-Driven Earnings Call Analysis</div>
+        <p class="project-desc">Chatbot applying GPT-4 and Retrieval-Augmented Generation (RAG) to analyze earnings call transcripts, surfacing key metrics for investors — growth, profit, and revenue signals.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">OpenAI API</span>
+          <span class="tech-pill">RAG</span>
+          <span class="tech-pill">MongoDB</span>
+          <span class="tech-pill">HuggingFace</span>
+        </div>
+        <a href="https://github.com/patrickmurphym/Capstone_NLP" target="_blank" class="project-link">View repository →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-tag">NLP · Sentiment</div>
+        <div class="project-title">Fed Policy Sentiment via NLP</div>
+        <p class="project-desc">Extracted hawkish/dovish sentiment signals from Federal Reserve communications (2018–2022) using FinBERT and NLTK, mapping central bank tone to market behavior.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">FinBERT</span>
+          <span class="tech-pill">NLTK</span>
+          <span class="tech-pill">Pandas</span>
+        </div>
+        <a href="https://github.com/patrickmurphym/NLP_Project_2/" target="_blank" class="project-link">View repository →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-tag">Time Series · Econometrics</div>
+        <div class="project-title">ARMA Egg Price Forecasting</div>
+        <p class="project-desc">Python-based ARMA model forecasting monthly US egg prices. Applied Dickey-Fuller stationarity tests, detrending, deseasonalizing, and regression analysis to identify a positive long-run trend.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">ARMA</span>
+          <span class="tech-pill">statsmodels</span>
+          <span class="tech-pill">Matplotlib</span>
+        </div>
+        <a href="https://github.com/patrickmurphym/Egg_Prices_Forecast" target="_blank" class="project-link">View repository →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── SKILLS ─── -->
+  <section id="skills">
+    <div class="section-label">04 — Skills</div>
+    <h2 class="section-title">Tools of the trade.</h2>
+
+    <div class="skills-section-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Python</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">R</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">SQL</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">C</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">HTML / CSS</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">LaTeX</span></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Data & Analysis</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Pandas</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">NumPy</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">scikit-learn</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Matplotlib / Seaborn</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Excel (Advanced)</span></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">ML / Deep Learning</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">TensorFlow</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Keras</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">PyTorch</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">NLP (FinBERT, NLTK)</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">LLM / RAG Pipelines</span></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Databases & Tools</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">MySQL / PostgreSQL</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">MongoDB</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Git</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Bloomberg Terminal</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── EDUCATION ─── -->
+  <section id="education">
+    <div class="section-label">05 — Education</div>
+    <h2 class="section-title">Academic foundation.</h2>
+
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-school">New York University<br>Tandon School of Engineering</div>
+        <div class="edu-location">Brooklyn, NY · USA</div>
+        <div class="edu-degree">M.S. Financial Engineering</div>
+        <div class="edu-meta">GPA: 3.8 / 4.0 · Graduated May 2024</div>
+        <div class="edu-courses-label">Relevant Coursework</div>
+        <div class="edu-courses">
+          <span class="course-tag">Financial Mathematics</span>
+          <span class="course-tag">Time Series Analysis</span>
+          <span class="course-tag">Stochastic Processes</span>
+          <span class="course-tag">Derivatives Pricing</span>
+        </div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-school">Universidad<br>Adolfo Ibáñez</div>
+        <div class="edu-location">Viña del Mar · Chile</div>
+        <div class="edu-degree">B.S. Industrial & Computer Engineering</div>
+        <div class="edu-meta">GPA: 6.6 / 7.0 · Graduated April 2022</div>
+        <div class="edu-courses-label">Relevant Coursework</div>
+        <div class="edu-courses">
+          <span class="course-tag">Data Structures & Algorithms</span>
+          <span class="course-tag">Machine Learning</span>
+          <span class="course-tag">Data Visualization</span>
+          <span class="course-tag">Applied Statistics</span>
+          <span class="course-tag">Discrete Math</span>
+          <span class="course-tag">Differential Equations</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="section-label">06 — Contact</div>
+    <h2 class="section-title">Let's connect.</h2>
+
+    <div class="contact-grid reveal">
+      <a href="mailto:patrick.murphy@nyu.edu" class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">patrick.murphy@nyu.edu</div>
+        </div>
+      </a>
+
+      <a href="http://linkedin.com/in/patrick-james-murphy" target="_blank" class="contact-item">
+        <div class="contact-icon">in</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">patrick-james-murphy</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/patrickmurphym" target="_blank" class="contact-item">
+        <div class="contact-icon">gh</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">patrickmurphym</div>
+        </div>
+      </a>
+
+      <a href="tel:+15162160686" class="contact-item">
+        <div class="contact-icon">☎</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+1 (516) 216-0686</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// Typed text effect
+const phrases = [
+  "A Financial Engineer",
+  "A Python Developer",
+  "An ML Practitioner",
+  "A Credit Analyst",
+  "A Problem Solver",
+  "An Analytical Thinker"
+];
+let pi = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed-text');
+
+function type() {
+  const phrase = phrases[pi];
+  if (!deleting) {
+    el.textContent = phrase.slice(0, ++ci);
+    if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    el.textContent = phrase.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 40 : 80);
+}
+type();
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => obs.observe(el));
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar-nav a');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => navObs.observe(s));
+
+// Close mobile sidebar on nav click
+document.querySelectorAll('.sidebar-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
