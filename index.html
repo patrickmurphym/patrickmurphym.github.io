@@ -1,950 +1,1256 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Patrick Murphy | Financial Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e45;
+    --navy-light: #243b55;
+    --slate: #354f6e;
+    --accent: #4ecdc4;
+    --accent-dim: #2a9d94;
+    --accent-pale: rgba(78,205,196,0.12);
+    --gold: #f4a261;
+    --gold-dim: #e08c50;
+    --text-primary: #e8edf2;
+    --text-secondary: #8fa4bc;
+    --text-muted: #5a7390;
+    --card-bg: rgba(26,46,69,0.6);
+    --card-border: rgba(78,205,196,0.15);
+    --card-border-hover: rgba(78,205,196,0.4);
+    --sidebar-w: 240px;
+  }
 
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-PGZH8HT');</script>
-    <!-- End Google Tag Manager -->
+  html { scroll-behavior: smooth; }
 
-    <!-- Materialize - Compiled and minified CSS-->
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css" />
-    <!-- Font Awesome Icon - CSS-->
-    <link rel="stylesheet"
-      href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-    <!-- Custom Styles-->
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <title>Patrick Murphy | Analyst</title>
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-126939217-2"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(78,205,196,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(78,205,196,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    gtag('config', 'UA-126939217-2');
-  </script>
+  /* Glow blob */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(78,205,196,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    <!-- Open Graph-->
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Patrick Murphy" />
-    <meta property="og:description" content="Analyst" />
-    <meta property="og:url" content="https://patrickmurphym.github.io/" />
-    <meta property="og:site_name" content="Patrick Murphy" />
-    <meta property="article:publisher"
-      content="https://patrickmurphym.github.io/" />
-    <meta property="og:image"
-      content="https://patrickmurphym.github.io/examples/preview.JPG" />
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: rgba(13,27,42,0.92);
+    border-right: 1px solid var(--card-border);
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    z-index: 100;
+    overflow-y: auto;
+  }
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@patrickmym" />
-    <meta name="twitter:title" content="Human | Analyst | Data-Driven" />
-    <meta name="twitter:description" content="Analyst | Data Scientist" />
-    <meta name="twitter:url" content="https://twitter.com/patrickmym" />
-    <meta name="author" content="Patrick Murphy" />
-    <meta name="description"
-      content="Financial Engineer with the power of Machine Learning and AI on his side." />
-    <link rel="apple-touch-icon" sizes="57x57"
-      href="/assets/img/favicon/apple-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60"
-      href="/assets/img/favicon/apple-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72"
-      href="/assets/img/favicon/apple-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76"
-      href="/assets/img/favicon/apple-icon-76x76.png" />
-    <link rel="apple-touch-icon" sizes="114x114"
-      href="/assets/img/favicon/apple-icon-114x114.png" />
-    <link rel="apple-touch-icon" sizes="120x120"
-      href="/assets/img/favicon/apple-icon-120x120.png" />
-    <link rel="apple-touch-icon" sizes="144x144"
-      href="/assets/img/favicon/apple-icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="152x152"
-      href="/assets/img/favicon/apple-icon-152x152.png" />
-    <link rel="apple-touch-icon" sizes="180x180"
-      href="/assets/img/favicon/apple-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192"
-      href="/assets/img/favicon/android-icon-192x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32"
-      href="/assets/img/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="96x96"
-      href="/assets/img/favicon/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16"
-      href="/assets/img/favicon/favicon-16x16.png" />
-    <link rel="manifest" href="/assets/img/favicon/manifest.json" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="msapplication-TileImage"
-      content="/assets/img/favicon/ms-icon-144x144.png" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="robots" content="index, follow" />
-    <!-- Google Site Verification for indexing -->
-    <meta name="google-site-verification"
-      content="_qxK8tePiU2fhnwlwnJ7pkDFnj1k2EiKq_cYGy1Cb84" />
+  .sidebar-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-dim), var(--navy-light));
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
 
-  </head>
+  .sidebar-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+  }
 
-  <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-PGZH8HT"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
+  .sidebar-role {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 2rem;
+  }
 
-    <!-- Navigation Menu-->
-    <!-- Nav class 1 -->
-    <nav class="hide-on-small-only">
-      <ul class="side-nav fixed section table-of-contents">
+  .sidebar-nav {
+    list-style: none;
+    flex: 1;
+  }
 
-        <li class="logo">
-          <a id="logo-container"
-            aria-label="Navigate to the beginning of the page" href="#intro"
-            class="brand-logo grey-blue-text">
-            <img src="/assets/img/profile-pic-2.jpg"
-              class="circle img-responsive profile-pic" alt="avatar">
-          </a>
-        </li>
+  .sidebar-nav li { margin-bottom: 0.15rem; }
 
-        <li class="bold">
-          <a aria-label="Navigate to the About section" href="#about"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-social-person small"></i><span>About</span></a>
-        </li>
-        <li class="bold">
-          <a aria-label="Navigate to the Experience section" href="#experience"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-action-trending-up small"></i><span>Experience</span></a>
-        </li>
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
 
-        <li class="bold">
-          <!-- mdi-av-web small
-             mdi-av-my-library-books small-->
-          <a aria-label="Navigate to the Projects section" href="#projects"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-av-my-library-books small"></i><span>Projects</span></a>
-        </li>
+  .sidebar-nav a:hover,
+  .sidebar-nav a.active {
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
 
-        <li class="bold">
-          <!--
-        ICONS:
-        mdi-action-assessment
-        mdi-social-poll
-        mdi-av-equalizer
-        -->
-          <a aria-label="Navigate to the Skills section" href="#skills"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-action-assessment small"></i><span>Skills</span></a>
-        </li>
+  .sidebar-nav a .nav-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
 
-        <li class="bold">
-          <!--
-        ICONS:
-        -->
-          <a aria-label="Navigate to the Education section" href="#education"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-social-school small"></i><span>Education</span></a>
-        </li>
+  .sidebar-nav a:hover .nav-dot,
+  .sidebar-nav a.active .nav-dot {
+    background: var(--accent);
+  }
 
-        <li class="bold">
-          <!-- 
-        1. mdi-communication-contacts
-        2. mdi-content-mail
-        3. mdi-communication-email
-        -->
-          <a aria-label="Navigate to the Contact section" href="#contact"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-content-mail small"></i><span>Contact</span></a>
-        </li>
+  .sidebar-bottom {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    gap: 0.65rem;
+  }
 
-        <li class="bold">
-          <!--
-        ICONS:
-        1. mdi-action-description
-        2. mdi-file-folder
-        3. mdi-file-folder-open
-        4. mdi-file-attachment
-        5. mdi-file-folder-shared
-        -->
-          <a aria-label="Open Patrick's resume in a new tab" href="#resume"
-            target="_blank"
-            onclick="window.open('https://drive.google.com/file/d/1QM9CRz4XiA-Ey8qTvdzxLQ0lBqxjt8s8/view?usp=sharing')"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-file-folder-open small"></i><span>Resume</span></a>
-          <!-- <a aria-label="Open Patrick's resume in a new tab" href="https://varadbhogayata.github.io/assets/resume/Varad_Bhogayata_Resume.pdf" target="_blank"
-        class="waves-effect waves-dark teal-text"><i class="mdi-file-folder-open small"></i><span>Resume</span></a>   -->
-        </li>
-      </ul>
-    </nav>
+  .social-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+  }
 
-    <!-- Nav class 2 -->
-    <nav class="hide-on-large only trigger z-depth-1">
-      <a aria-label="Toggle visibility of the mobile navbar" href="#"
-        data-activates="slide-out"
-        class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-      <div class="name-title">
-        <a id="name" aria-label="Navigate to the beginning of the page" href="#"
-          class="teal-text">Patrick Murphy</a>
-        <span class="black-text">Analyst</span>
+  .social-icon:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    margin-left: var(--sidebar-w);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HERO ─── */
+  #intro {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 5rem 4rem;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-tagline {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+    font-weight: 300;
+  }
+
+  .hero-typed-wrap {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    min-height: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: var(--gold);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--navy);
+  }
+
+  .btn-primary:hover {
+    background: #5ee8df;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--card-border-hover);
+    color: var(--text-primary);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 3rem;
+    right: 5rem;
+    display: flex;
+    gap: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 1s forwards;
+  }
+
+  .hero-stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-stat-num span { color: var(--accent); }
+
+  .hero-stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section {
+    padding: 5rem 5rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .about-text p + p { margin-top: 1.25rem; }
+
+  .skills-inline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .skill-chip {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .skill-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+
+  .skill-chip .chip-cat {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    opacity: 0.4;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .timeline-item:hover {
+    border-color: var(--card-border-hover);
+    transform: translateX(4px);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 1.75rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--navy);
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.2);
+  }
+
+  .timeline-org {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-role {
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 1rem;
+  }
+
+  .timeline-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .timeline-list li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.4rem;
+    font-weight: 300;
+  }
+
+  .timeline-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 0.1rem;
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .project-card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-3px);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    background: var(--accent-pale);
+    color: var(--accent);
+    border: 1px solid rgba(78,205,196,0.2);
+    width: fit-content;
+  }
+
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    flex: 1;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tech-pill {
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .project-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: gap 0.2s;
+    margin-top: auto;
+  }
+
+  .project-link:hover { gap: 0.6rem; }
+
+  /* ─── SKILLS ─── */
+  .skills-section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skill-group {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s;
+  }
+
+  .skill-group:hover { border-color: var(--card-border-hover); }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .skill-item:last-child { border-bottom: none; }
+
+  .skill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .skill-name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .edu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(78,205,196,0.08) 0%, transparent 70%);
+  }
+
+  .edu-card:hover { border-color: var(--card-border-hover); }
+
+  .edu-school {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .edu-location {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  .edu-degree {
+    font-size: 0.88rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+    font-weight: 400;
+  }
+
+  .edu-meta {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .edu-courses-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .edu-courses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .course-tag {
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding-bottom: 8rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 640px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+  }
+
+  .contact-item:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+    background: rgba(78,205,196,0.06);
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--accent-pale);
+    border: 1px solid rgba(78,205,196,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .contact-label {
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-value {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── MOBILE TOGGLE ─── */
+  .mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: var(--navy-mid);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--card-border), transparent);
+    margin: 0 5rem;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--slate); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    :root { --sidebar-w: 200px; }
+    #intro, section { padding-left: 3rem; padding-right: 3rem; }
+    .hero-stats { right: 3rem; }
+    .section-divider { margin: 0 3rem; }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
+    main { margin-left: 0; }
+    .mobile-nav-toggle { display: flex; }
+    #intro { padding: 6rem 2rem 4rem; }
+    section { padding: 3.5rem 2rem; }
+    .about-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { position: static; margin-top: 2.5rem; }
+    .section-divider { margin: 0 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mobile-nav-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation">☰</button>
+
+<nav class="sidebar">
+  <div class="sidebar-avatar">PM</div>
+  <div class="sidebar-name">Patrick Murphy</div>
+  <div class="sidebar-role">Financial Engineer</div>
+
+  <ul class="sidebar-nav">
+    <li><a href="#intro" class="active"><span class="nav-dot"></span>Home</a></li>
+    <li><a href="#about"><span class="nav-dot"></span>About</a></li>
+    <li><a href="#experience"><span class="nav-dot"></span>Experience</a></li>
+    <li><a href="#projects"><span class="nav-dot"></span>Projects</a></li>
+    <li><a href="#skills"><span class="nav-dot"></span>Skills</a></li>
+    <li><a href="#education"><span class="nav-dot"></span>Education</a></li>
+    <li><a href="#contact"><span class="nav-dot"></span>Contact</a></li>
+    <li><a href="https://drive.google.com/file/d/1QM9CRz4XiA-Ey8qTvdzxLQ0lBqxjt8s8/view?usp=sharing" target="_blank"><span class="nav-dot"></span>Resume ↗</a></li>
+  </ul>
+
+  <div class="sidebar-bottom">
+    <a href="http://linkedin.com/in/patrick-james-murphy" target="_blank" class="social-icon" title="LinkedIn">in</a>
+    <a href="https://github.com/patrickmurphym" target="_blank" class="social-icon" title="GitHub">gh</a>
+    <a href="mailto:patrick.murphy@nyu.edu" class="social-icon" title="Email">@</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ─── HERO ─── -->
+  <section id="intro">
+    <div class="hero-eyebrow">Financial Engineer · NYC</div>
+    <h1 class="hero-name">Patrick<br><em>Murphy.</em></h1>
+    <div class="hero-typed-wrap"><span id="typed-text"></span><span class="cursor"></span></div>
+    <p class="hero-tagline">Financial engineer bridging loan servicing and quantitative analytics. Building models that transform data into decision-relevant insight.</p>
+    <div class="hero-cta">
+      <a href="#about" class="btn btn-primary">Explore my work</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">3.8<span>/4.0</span></div>
+        <div class="hero-stat-label">NYU GPA</div>
       </div>
-    </nav>
+      <div>
+        <div class="hero-stat-num">4<span>+</span></div>
+        <div class="hero-stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3<span></span></div>
+        <div class="hero-stat-label">ML Projects</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Nav class 3 -->
-    <nav class="hide-on-large only">
-      <ul id="slide-out" class="side-nav">
-        <li class="bold">
-          <a aria-label="Navigate to the About section" href="#about"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-social-person small"></i><span>About</span></a>
-        </li>
-        <li class="bold">
-          <a aria-label="Navigate to the Experience section" href="#experience"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-action-trending-up small"></i><span>Experience</span></a>
-        </li>
-        <li class="bold">
-          <a aria-label="Navigate to the Projects section" href="#projects"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-av-my-library-books small"></i><span>Projects</span></a>
-        </li>
-        <li class="bold">
-          <a aria-label="Navigate to the Skills section" href="#skills"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-action-assessment small"></i><span>Skills</span></a>
-        </li>
+  <div class="section-divider"></div>
 
-        <li class="bold">
-          <a aria-label="Navigate to the Education section" href="#education"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-social-school small"></i><span>Education</span></a>
-        </li>
-        <li class="bold">
-          <a aria-label="Navigate to the Contact section" href="#contact"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-content-mail small"></i><span>Contact</span></a>
-        </li>
-        <li class="bold">
-          <a aria-label="Open Patrick's Resume in a new tab"
-            href="https://drive.google.com/file/d/1QM9CRz4XiA-Ey8qTvdzxLQ0lBqxjt8s8/view?usp=sharing"
-            target="_blank"
-            class="waves-effect waves-dark teal-text"><i
-              class="mdi-file-folder-open small"></i><span>Resume</span></a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Main Content-->
-    <main>
-      <!-- First Section: Heading lines and image -->
-      <section id="intro" class="section scrollspy full-height">
-        <div class="overlay"></div>
-        <div class="container">
-          <div class="col-md-9">
-            <div class="content section-padding valign"
-              style="margin-left: 10%; margin-top: 50px;">
-              <div class="caption">
-                <h2>Hi, I'm <span class="teal">Patrick Murphy.</span></h2>
-                <h5 style="color:#fff"><span class="typing"
-                    style="font-weight: 700; color: #ffffff"></span></h5>
-                <!-- <h5 style="color:#00796b">A <span class="typing" style="font-weight: 300; color:#fff"></span></h5> -->
-                <h5>Diligent, curious, and a proactive leader. Always eager to
-                  learn.</h5>
-              </div>
-              <div class="social">
-                <a href="http://linkedin.com/in/patrick-james-murphy"
-                  target="_blank">
-                  <button class="icon-btn linkedin">
-                    <i class="fa fa-linkedin"></i>
-                  </button>
-                </a>
-                <a href="https://github.com/patrickmurphym/" target="_blank">
-                  <button class="icon-btn github">
-                    <i class="fa fa-github"></i>
-                  </button>
-                </a>
-
-                <!-- <a href="https://angel.co/u/varad_bhogayata" target="_blank">
-                <button class="icon-btn angellist">
-                  <i class="fa fa-angellist"></i>
-                </button>
-              </a> -->
-
-                <!-- <a href="http://linkedin.com/in/varadbhogayata" target="_blank">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-
-                  </span>
-              </a> -->
-              </div>
-              <div class='buttons'>
-                <a href="#about" class="readme" style="font-weight: 800">Read
-                  More</a>
-                <a href="#contact" class="contactme"
-                  style="font-weight: 800">Contact Me</a>
-              </div>
-            </div>
-          </div>
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="section-label">01 — About</div>
+    <h2 class="section-title">The full picture.</h2>
+    <div class="about-grid reveal">
+      <div>
+        <p class="about-text">I'm a Financial Engineer with an M.S. from NYU Tandon School of Engineering and a B.S. in Industrial and Computer Engineering from Universidad Adolfo Ibáñez. My work sits at the intersection of quantitative finance, machine learning, and data engineering.</p>
+        <p class="about-text" style="margin-top:1.25rem">Currently in loan servicing, I focus on automating portfolio reporting, building credit analytics tools, and developing early-warning scoring systems — actively bridging toward quantitative credit analysis roles.</p>
+        <p class="about-text" style="margin-top:1.25rem">Proficient in Python, R, SQL, and Excel, I've applied NLP, ARIMA modeling, and RAG-based LLM pipelines to real financial problems.</p>
+      </div>
+      <div>
+        <div class="skills-inline-grid">
+          <div class="skill-chip"><span class="chip-cat">Core</span>Python · Pandas · NumPy</div>
+          <div class="skill-chip"><span class="chip-cat">Analytics</span>R · SQL · Excel</div>
+          <div class="skill-chip"><span class="chip-cat">ML / AI</span>scikit-learn · TensorFlow · NLP</div>
+          <div class="skill-chip"><span class="chip-cat">Finance</span>Financial Modeling · ARIMA</div>
+          <div class="skill-chip"><span class="chip-cat">Databases</span>MySQL · PostgreSQL · MongoDB</div>
+          <div class="skill-chip"><span class="chip-cat">Tools</span>Git · LaTeX · Bloomberg</div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <!-- Second Section: About -->
-      <section id="about" class="section scrollspy">
-        <h3 class="page-title white-text teal">About</h3>
-        <div class="container flow-text">
-          <p>
-            I am Patrick J. Murphy, a Financial Engineer with a Master's in
-            Financial Engineering from NYU Tandon and a Bachelor's in Industrial
-            and Computer Engineering from Universidad Adolfo Ibanez. My
-            expertise spans data analysis, machine learning, and financial
-            modeling. Proficient in Python, R, SQL, and Excel, I have developed
-            and implemented projects utilizing NLP and ARIMA models, showcasing
-            my ability to apply advanced analytical techniques.
-          </p>
-          <!-- <p>
-            As a Teaching Assistant in Finance and Mathematics, I designed
-            course materials, conducted assessments, and taught subjects
-            including Financial Management and Multivariable Calculus. My skills
-            also include data visualization with Matplotlib and Seaborn, and
-            document production with LaTeX. I am passionate about leveraging
-            technology to drive insights and enhance decision-making in finance.
-            I am eager to apply my diverse skills in a dynamic role.
-          </p> -->
-          <p>
-            <b>Technical Skills:</b>
-            <!-- Add indentation -->
-            <ul>
-              <li><b>Data Analysis:</b> Python, Pandas, R, C, Excel</li>
-              <li><b>Data Visualization:</b> Processing (javascript
-                sub-language), Matplotlib, Seaborn</li>
-              <li><b>Document Production:</b> LaTeX</li>
-              <li><b>Programming Languages:</b> Python, C, HTML/CSS</li>
-              <li><b>Databases:</b> MySQL, SQL, PostgreSQL, MongoDB</li>
-              <li><b>Libraries:</b> NumPy, Pandas, Keras, TensorFlow,
-                PyTorch</li>
-              <li><b>Tools & Technologies:</b> Git</li>
-            </ul>
-          </p>
+  <div class="section-divider"></div>
+
+  <!-- ─── EXPERIENCE ─── -->
+  <section id="experience">
+    <div class="section-label">02 — Experience</div>
+    <h2 class="section-title">Where I've worked.</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">NYU Tandon School of Engineering</div>
+        <div class="timeline-role">Graduate Assistant, Office of Graduate Admissions</div>
+        <div class="timeline-date">Sep 2022 – May 2024 · Brooklyn, NY</div>
+        <ul class="timeline-list">
+          <li>Managed phone inquiries and served as liaison between prospective students and the admissions office.</li>
+          <li>Drafted daily communications covering admissions processes with clarity and precision.</li>
+          <li>Handled sensitive student documents — transcripts and academic records — with confidentiality and accuracy.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">Universidad Adolfo Ibáñez</div>
+        <div class="timeline-role">Teaching Assistant, Finance and Mathematics Department</div>
+        <div class="timeline-date">Mar 2019 – Jun 2022 · Viña del Mar, Chile</div>
+        <ul class="timeline-list">
+          <li>Designed weekly course materials and exercises in LaTeX across Financial Management, Linear Algebra, Differential Equations, and Multivariable Calculus.</li>
+          <li>Conducted monthly assessments to evaluate student comprehension and progress.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">UAI Engineering Student Center</div>
+        <div class="timeline-role">President & Coordinator</div>
+        <div class="timeline-date">Apr 2020 – Nov 2021 · Viña del Mar, Chile</div>
+        <ul class="timeline-list">
+          <li>Presided over the Student Council representing engineering students at Adolfo Ibáñez University.</li>
+          <li>Maintained communication between student body and university authorities during the COVID-19 pandemic.</li>
+          <li>Managed project execution and budget allocation across multiple committees.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-org">SILABUZ.COM</div>
+        <div class="timeline-role">CodeCamp Tutor</div>
+        <div class="timeline-date">Nov 2018 – Jan 2019 · Viña del Mar, Chile</div>
+        <ul class="timeline-list">
+          <li>Mentored economically vulnerable high school students in entrepreneurship and technology skills.</li>
+          <li>Guided students in developing prototypes using Design Thinking methodologies.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── PROJECTS ─── -->
+  <section id="projects">
+    <div class="section-label">03 — Projects</div>
+    <h2 class="section-title">Things I've built.</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-tag">NLP · LLM</div>
+        <div class="project-title">AI-Driven Earnings Call Analysis</div>
+        <p class="project-desc">Chatbot applying GPT-4 and Retrieval-Augmented Generation (RAG) to analyze earnings call transcripts, surfacing key metrics for investors — growth, profit, and revenue signals.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">OpenAI API</span>
+          <span class="tech-pill">RAG</span>
+          <span class="tech-pill">MongoDB</span>
+          <span class="tech-pill">HuggingFace</span>
         </div>
-      </section>
+        <a href="https://github.com/patrickmurphym/Capstone_NLP" target="_blank" class="project-link">View repository →</a>
+      </div>
 
-      <!-- Third Section: Experience -->
-      <section id="experience" class="section scrollspy">
-        <h3 class="page-title white-text teal">Experience</h3>
-        <div class="container">
-
-          <!-- Latest Experience -->
-          <div class="card">
-            <div class="card-content">
-              <div class="row">
-                <div class="col s12 m2">
-                  <a href="https://engineering.nyu.edu/" target="_blank"><img
-                      alt="NYU Tandon School of Engineering logo"
-                      src="/assets/img/nyu-tandon-logo.png"
-                      class="responsive-img center-block" /></a>
-                </div>
-                <div class="col s12 m10">
-                  <p>
-                    <span class="card-title"><a href="https://engineering.nyu.edu/"
-                        target="_blank"
-                        class="teal-text hoverline">New York University,<br>Tandon School of Engineering</a></span>
-                  </p>
-                </div>
-              </div>
-              <div style="font-size: 1.25rem" class="brown-text text-darken-2">Graduate Assistant,<br>
-                Office of Graduate Admissions</div>
-              <ul>
-                <li>Provided support to prospective and new students by managing phone inquiries and acting as a liaison with the admissions office.</li>
-                <li>Demonstrated strong written communication skills by crafting daily emails with clear and concise information regarding the admissions process.</li>
-                <li>Efficiently handled sensitive student documents, including transcripts and academic records, ensuring confidentiality and accuracy.</li>
-              </ul>
-            </div>
-            <div class="card-action">
-              <span>Sep 2022 - May 2024 | Brooklyn, NY, USA</span>
-            </div>
-          </div>
-          
-
-
-          <div class="card">
-            <div class="card-content">
-              <div class="row">
-                <div class="col s12 m2">
-                  <a href="https://www.uai.cl" target="_blank"><img
-                      alt="Universidad Adolfo Ibanez logo"
-                      src="/assets/img/uai-logo.webp"
-                      class="responsive-img center-block" /></a>
-                </div>
-                <div class="col s12 m10">
-                  <p>
-                    <span class="card-title"><a href="https://www.uai.cl"
-                        target="_blank"
-                        class="teal-text hoverline">Universidad Adolfo
-                        Ibanez</a></span>
-                  </p>
-                </div>
-              </div>
-              <div style="font-size: 1.25rem"
-                class="brown-text text-darken-2">Teaching Assistant,<br>
-                Finance and Mathematics Department</div>
-              <ul>
-                <li>Designed and produced comprehensive weekly course materials
-                  and exercises using LaTeX, ensuring clarity and effectiveness
-                  in conveying complex concepts.</li>
-                <li>Conducted thorough monthly assessments and examinations to
-                  evaluate student comprehension and progress accurately.</li>
-                <li>Instructed students in a diverse range of subjects weekly,
-                  including Financial Management, Linear Algebra, Differential
-                  Equations, Multivariable Calculus, and Physics, fostering a
-                  deep understanding of core principles and applications.</li>
-              </ul>
-            </div>
-            <div class="card-action">
-              <span>Mar 2019 - Jun 2022 | Vina del Mar, Chile</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-content">
-              <div class="row">
-                <div class="col s12 m2">
-                  <a href="https://www.instagram.com/ceeinuai/"
-                    target="_blank"><img
-                      alt="Centro de Estudiantes de Ingeniería Civil UAI Viña del Mar logo"
-                      src="/assets/img/ceein-logo.png"
-                      class="responsive-img center-block" /></a>
-                </div>
-                <div class="col s12 m10">
-                  <p>
-                    <span class="card-title"><a
-                        href="https://www.instagram.com/ceeinuai/"
-                        target="_blank"
-                        class="teal-text hoverline">UAI Engineering Student
-                        Center</a></span>
-                  </p>
-                </div>
-              </div>
-              <div style="font-size: 1.25rem"
-                class="brown-text text-darken-2">Coordinator</div>
-              <ul>
-                <li>In charge of general planning of the projects of the Student
-                  Council, keeping the agenda and ensuring the fulfillment of
-                  each activity.</li>
-                <li>Tasked with managing projects and their execution,
-                  distribute budget to the committees according to the financial
-                  planification and coaching underperforming committees.</li>
-              </ul>
-              <br>
-              <div style="font-size: 1.25rem"
-                class="brown-text text-darken-2">President</div>
-              <ul>
-                <li>Presided over the Student Council of Engineer Students,
-                  representing engineering students at Adolfo Ibáñez
-                  University.</li>
-                <li>Maintained constant communication between authorities and
-                  students, especially during the coronavirus pandemic.</li>
-                <li>Tasked with overseeing the correct execution of projects,
-                  forming alliances with other student organizations (within the
-                  university and other educational institutions).</li>
-              </ul>
-            </div>
-            <div class="card-action">
-              <span>Apr 2020 to Nov 2021 | Viña del Mar, Valparaiso
-                Region, Chile</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-content">
-              <div class="row">
-                <div class="col s12 m2">
-                  <a href="https://www.silabuz.com" target="_blank"><img
-                      alt="SILABUZ.COM logo"
-                      src="/assets/img/silabuz-logo.png"
-                      class="responsive-img center-block" /></a>
-                </div>
-                <div class="col s12 m10">
-                  <p>
-                    <span class="card-title"><a href="https://www.silabuz.com"
-                        target="_blank"
-                        class="teal-text hoverline">SILABUZ.COM</a></span>
-                  </p>
-                </div>
-              </div>
-              <div style="font-size: 1.25rem"
-                class="brown-text text-darken-2">CodeCamp Tutor</div>
-              <ul>
-                <li>Mentored economically vulnerable high school students in a workshop aimed at providing entrepreneurship skills.</li>
-                <li>Guided students in developing their own technological prototypes using Design Thinking principles.</li>
-                <li>Workshop done in collaboration with Adolfo Ibanez University.</li>
-              </ul>
-            </div>
-            <div class="card-action">
-              <span>Nov 2018 - Jan 2019 | Vina del Mar, Chile</span>
-            </div>
-          </div>
-
+      <div class="project-card reveal">
+        <div class="project-tag">NLP · Sentiment</div>
+        <div class="project-title">Fed Policy Sentiment via NLP</div>
+        <p class="project-desc">Extracted hawkish/dovish sentiment signals from Federal Reserve communications (2018–2022) using FinBERT and NLTK, mapping central bank tone to market behavior.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">FinBERT</span>
+          <span class="tech-pill">NLTK</span>
+          <span class="tech-pill">Pandas</span>
         </div>
-      </section>
+        <a href="https://github.com/patrickmurphym/NLP_Project_2/" target="_blank" class="project-link">View repository →</a>
+      </div>
 
-      <!-- Fourth Section: Projects -->
-      <!-- Change course names for the title of the project
-       Change the description for something smaller or other -->
-      <!-- Fix urls to not go to NYU -->
-      <section id="projects" class="section scrollspy">
-        <h3 class="page-title white-text teal">Projects</h3>
-        <div class="container">
-          <div class="row">
-
-            <!-- Capstone Project -->
-            <div class="col s12 m6 l4">
-              <div class="card medium">
-                <div class="card-image waves-effect waves-block waves-light">
-                  <img alt="AI Project"
-                    src="assets/img/project-ai-1.jpg"
-                    style="height: 100%; width: 100%" class="activator" />
-                </div>
-                <div class="card-content">
-                  <span
-                    class="card-title activator teal-text hoverline">AI-Driven
-                    Earnings Call Analysis<i
-                      class="mdi-navigation-more-vert right"></i></span>
-                </div>
-                <div class="card-reveal">
-                  <span class="card-title brown-text"><small>Details</small><i
-                      class="mdi-navigation-close right"></i></span>
-                  <p>
-                    <b>Chatbot applying LLM (ChatGPT-4) and RAG to analyze
-                      Earning
-                      Call Transcripts.</b>
-                  </p>
-                  <ul>
-                    <li>Utilized OpenAI's ChatGPT-4 API to generate automated
-                      document summaries for investors, focusing on key
-                      metrics
-                      such as business growth, profit, and revenue.</li>
-                    <li>Employed text-embedding-3-large from HuggingFace to
-                      boost analysis.</li>
-                    <li>Integrated MongoDB for efficient storage and
-                      retrieval.</li>
-                    <!-- <li>Produced 1-page comparative analysis between the target
-                      company, its industry sector, and previous quarters,
-                      contributing to enhanced investor decision-making
-                      processes through actionable insights gained from
-                      transcript analysis.</li> -->
-                  </ul>
-                  <p><b><a href="https://github.com/patrickmurphym/Capstone_NLP"
-                      target="_blank">Project Repository</a></b></p>
-                  <br>
-
-                  <div
-                    style="font-size: 85%; color: #666;">
-                    January 2024 - May 2024 <br>Brooklyn, NY, USA
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- NLP & the Investment Process Project -->
-            <div class="col s12 m6 l4">
-              <div class="card medium">
-                <div class="card-image waves-effect waves-block waves-light">
-                  <img alt="Federal Reserve"
-                    src="assets/img/fed.jpg"
-                    style="height: 100%; width: 100%" class="activator" />
-                </div>
-
-                <div class="card-content">
-                  <span class="card-title activator teal-text hoverline">NLP
-                    Insights into the Federal Reserve's Hawkish and Dovish
-                    Stances<i
-                      class="mdi-navigation-more-vert right"></i></span>
-                </div>
-
-                <div class="card-reveal">
-                  <span class="card-title brown-text"><small>Details</small><i
-                      class="mdi-navigation-close right"></i>
-                  </span>
-
-                  <p><b>
-                    Extracted insights into policy stances from Federal
-                    Reserve's communications between 2018 to 2022 leveraging NLP
-                    techniques.
-                  </b></p>
-
-                  <ul>
-                    <li>Utilized Python for processing and cleaning Federal
-                      Reserve documents.</li>
-                    <li>Employed FinBERT and NLTK to quantify hawkish and dovish
-                      sentiments.</li>
-                    <li>Provided valuable insights on the relationship between
-                      central bank communications and market behavior,
-                      demonstrating the potential of NLP in assessing
-                      sentiment's impact on financial markets.</li>
-                  </ul>
-
-                  <p><b><a href="https://github.com/patrickmurphym/NLP_Project_2/"
-                    target="_blank">Project Repository</a></b></p>
-                  <br>
-
-                  <div style="font-size: 85%; color: #666;">
-                    September 2023 - December 2023 <br>Brooklyn, NY, USA
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Econometrics & Time Series Analysis Project -->
-            <div class="col s12 m6 l4">
-              <div class="card medium">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img alt="Forecasting TS"
-                      src="assets/img/time-series.png"
-                      style="height: 100%; width: 100%" class="activator" />
-                  </a>
-                </div>
-                <div class="card-content">
-                  <span
-                    class="card-title activator teal-text hoverline">ARMA Modeling for Egg Price Prediction<i
-                      class="mdi-navigation-more-vert right"></i></span>
-                  
-                </div>
-                <div class="card-reveal">
-                  <span class="card-title brown-text"><small>Details</small><i
-                      class="mdi-navigation-close right"></i></span>
-                  
-                  <p><b>
-                    Python-based team project constructing an ARMA model to
-                    forecast monthly egg prices in the US.
-                  </b></p>
-
-                  <ul>
-                    <li>Applied stationarity tests, Dickey-Fuller test,
-                      detrending, and deseasonalizing methods to preprocess
-                      data, revealing significant yearly seasonality in egg
-                      prices.</li>
-                    <li>Conducted regression analysis to identify a positive
-                      linear trend indicating rising prices over time.</li>
-                  </ul>
-
-                  <p><b>
-                    <a href="https://github.com/patrickmurphym/Egg_Prices_Forecast" target="_blank">Project Repository</a>
-                  </b></p>
-                  <br>
-
-                  <div style="font-size: 85%; color: #666;">
-                    January 2023 - May 2023 <br>Brooklyn, NY, USA
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+      <div class="project-card reveal">
+        <div class="project-tag">Time Series · Econometrics</div>
+        <div class="project-title">ARMA Egg Price Forecasting</div>
+        <p class="project-desc">Python-based ARMA model forecasting monthly US egg prices. Applied Dickey-Fuller stationarity tests, detrending, deseasonalizing, and regression analysis to identify a positive long-run trend.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">ARMA</span>
+          <span class="tech-pill">statsmodels</span>
+          <span class="tech-pill">Matplotlib</span>
         </div>
-      </section>
+        <a href="https://github.com/patrickmurphym/Egg_Prices_Forecast" target="_blank" class="project-link">View repository →</a>
+      </div>
 
-      <!-- Fifth Section: Skills -->
-      <section id="skills" class="section scrollspy">
-        <h3 class="page-title white-text teal">Skills</h3>
-        <div class="container">
-          <!-- Languages and Databases -->
-          <div class="card">
-            <div class="card-content">
-              <h4 class="brown-text light">Languages</h4>
-              <div class="row text-center">
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/python-logo-1-300x300.jpg"
-                    class="responsive-img" />Python
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="assets/img/R_logo.svg.png"
-                    class="responsive-img" />R
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="assets/img/c-logo.png"
-                    class="responsive-img" />C
-                </div> 
-                <div class="col s4 m2">
-                  <img alt src="assets/img/processing-logo.png"
-                    class="responsive-img" />Processing (JavaScript sub-language)
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="assets/img/LaTeX_logo.svg.png"
-                    class="responsive-img" />LaTeX
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="assets/img/sql-logo.jpg"
-                    class="responsive-img" />SQL
-                </div>
-              </div>
-            </div>
-          </div>
+    </div>
+  </section>
 
-          <!-- Libraries -->
-          <div class="card">
-            <div class="card-content">
-              <h4 class="brown-text light">Libraries</h4>
-              <div class="row text-center">
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/numpy-logo-1-500x500.jpg"
-                    class="responsive-img" />NumPy
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/pandas-logo-2-500x500.jpg"
-                    class="responsive-img" />Pandas
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/sk-learn-logo-1-500x500.jpg"
-                    class="responsive-img" />scikit-learn
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/matplotlib-logo-1-500x500.jpg"
-                    class="responsive-img" />matplotlib
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="assets/img/seaborn-logo.png"
-                    class="responsive-img" />Seaborn
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="section-divider"></div>
 
-          <!-- Frameworks -->
-          <div class="card">
-            <div class="card-content">
-              <h4 class="brown-text light">Frameworks</h4>
-              <div class="row text-center">
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/tensorflow-logo-1.png"
-                    class="responsive-img" />TensorFlow
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/keras-logo.png"
-                    class="responsive-img" />Keras
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/pytorch-logo.png"
-                    class="responsive-img" />PyTorch
-                </div>
-              </div>
-            </div>
-          </div>
+  <!-- ─── SKILLS ─── -->
+  <section id="skills">
+    <div class="section-label">04 — Skills</div>
+    <h2 class="section-title">Tools of the trade.</h2>
 
-          <!-- Other -->
-          <div class="card">
-            <div class="card-content">
-              <h4 class="brown-text light">Other</h4>
-              <div class="row text-center">
-                <div class="col s4 m2">
-                  <img alt src="/assets/img/git.png"
-                    class="responsive-img" />Git
-                </div>
-                <div class="col s4 m2">
-                  <img alt src="assets/img/bloomberg-terminal-logo.jpg"
-                    class="responsive-img" />Bloomberg Terminal
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="skills-section-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Python</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">R</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">SQL</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">C</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">HTML / CSS</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">LaTeX</span></div>
+      </div>
 
-          <!-- certifications -->
-          <!-- <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Certificates</h4>
-            <div class="row text-left">
-              <div class="container">
-                <div class="row">
-                  <div class="col s12 m6 l6">
-                    <div class="card">
-                      <div class="card-image">
-                        <img src="/assets/img/mooc-machine-learning-coursera-800x500.jpg">
-                      </div>
-                      <div class="card-content">
-                        <span class="card-title teal-text">Machine Learning (Stanford)</span>
-                      </div>
-                    </div>
-                  </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data & Analysis</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Pandas</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">NumPy</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">scikit-learn</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Matplotlib / Seaborn</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Excel (Advanced)</span></div>
+      </div>
 
-                  <div class="col s12 m6 l6">
-                    <div class="card">
-                      <div class="card-image">
-                        <img src="/assets/img/mooc-algorithms-stanford-2-800x500.jpg">
-                      </div>
-                      <div class="card-content">
-                        <span class="card-title teal-text">Algorithms (Stanford)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
+      <div class="skill-group">
+        <div class="skill-group-title">ML / Deep Learning</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">TensorFlow</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Keras</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">PyTorch</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">NLP (FinBERT, NLTK)</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">LLM / RAG Pipelines</span></div>
+      </div>
 
+      <div class="skill-group">
+        <div class="skill-group-title">Databases & Tools</div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">MySQL / PostgreSQL</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">MongoDB</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Git</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Bloomberg Terminal</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── EDUCATION ─── -->
+  <section id="education">
+    <div class="section-label">05 — Education</div>
+    <h2 class="section-title">Academic foundation.</h2>
+
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-school">New York University<br>Tandon School of Engineering</div>
+        <div class="edu-location">Brooklyn, NY · USA</div>
+        <div class="edu-degree">M.S. Financial Engineering</div>
+        <div class="edu-meta">GPA: 3.8 / 4.0 · Graduated May 2024</div>
+        <div class="edu-courses-label">Relevant Coursework</div>
+        <div class="edu-courses">
+          <span class="course-tag">Financial Mathematics</span>
+          <span class="course-tag">Time Series Analysis</span>
+          <span class="course-tag">Stochastic Processes</span>
+          <span class="course-tag">Derivatives Pricing</span>
         </div>
-      </section>
+      </div>
 
-      <!-- Seventh Section: Education -->
-      <section id="education" class="section scrollspy">
-        <h3 class="page-title white-text teal">Education</h3>
-        <div class="container">
-          <div class="row">
-            <!-- Education 1 -->
-            <div class="col s12 m6 l6">
-              <div class="card">
-                <div class="card-content">
-                  <p>
-                    <span class="card-title"><a
-                        href="https://engineering.nyu.edu/" target="_blank"
-                        class="teal-text hoverline">New York University, Tandon
-                        School of Engineering</a></span>
-                  </p>
-                  <p class="brown-text">Brooklyn, NY, USA</p>
-                  <p>
-                    <b>Degree: </b>Master of Science in Financial
-                    Engineering<br>
-                    <b>GPA: </b>3.8/4.0<br>
-                    <b>Graduation: </b>May 2024
-                  </p>
-                  <ul>
-                    <p><b>Relevant Coursework:</b></p>
-                    <ul>
-                      <li>Financial Mathematics</li>
-                      <li>Time Series Analysis</li>
-                      <li>Stochastic Processes in Finance</li>
-                      <li>Derivatives Pricing</li>
-                    </ul>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- Education 2 -->
-            <div class="col s12 m6 l6">
-              <div class="card">
-                <div class="card-content">
-                  <p>
-                    <span class="card-title"><a href="https://www.uai.cl/"
-                        target="_blank" class="teal-text hoverline">Universidad
-                        Adolfo Ibanez</a></span>
-                  </p>
-                  <p class="brown-text">Vina del Mar, Chile</p>
-                  <p>
-                    <b>Degree: </b>Bachelor of Science in Industrial Engineering
-                    and Computer Engineering<br>
-                    <b>GPA: </b>6.6/7.0<br>
-                    <b>Graduation: </b>April 2022
-                  </p>
-                  <ul>
-                    <p><b>Relevant Coursework:</b></p>
-                    <ul>
-                      <li>Data Structures and Algorithms</li>
-                      <li>Machine Learning and Data Mining</li>
-                      <li>Data Analysis and Visualization</li>
-                      <li>Multivariable Calculus</li>
-                      <li>Discrete Mathematics</li>
-                      <li>Differential Equations</li>
-                      <li>Applied Statistics</li>
-                    </ul>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="edu-card reveal">
+        <div class="edu-school">Universidad<br>Adolfo Ibáñez</div>
+        <div class="edu-location">Viña del Mar · Chile</div>
+        <div class="edu-degree">B.S. Industrial & Computer Engineering</div>
+        <div class="edu-meta">GPA: 6.6 / 7.0 · Graduated April 2022</div>
+        <div class="edu-courses-label">Relevant Coursework</div>
+        <div class="edu-courses">
+          <span class="course-tag">Data Structures & Algorithms</span>
+          <span class="course-tag">Machine Learning</span>
+          <span class="course-tag">Data Visualization</span>
+          <span class="course-tag">Applied Statistics</span>
+          <span class="course-tag">Discrete Math</span>
+          <span class="course-tag">Differential Equations</span>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <!-- Eight Section: Contact -->
-      <section id="contact" class="section scrollspy full-height">
-        <h3 class="page-title white-text teal">Contact</h3>
-        <div class="container">
-          <p>
-            <a aria-label="Call Patrick" data-position="top"
-              data-tooltip="Call Patrick"
-              class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-                class="fa fa-phone"></i><a
-                aria-label="Call Patrick">+1 (516) 216-0686</a></a>
-          </p>
-          <p>
-            <a aria-label="Email Patrick" href="mailto:patrick.murphy@nyu.edu"
-              target="_blank" data-position="top"
-              data-tooltip="Email Patrick"
-              class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-                class="fa fa-envelope"></i><a aria-label="Email Patrick"
-                href="mailto:patrick.murphy@nyu.edu"
-                class="hoverline">patrick.murphy@nyu.edu</a></a>
-          </p>
-          <p>
-            <a aria-label="View Patrick on GitHub"
-              href="http://github.com/patrickmurphym" target="_blank"
-              data-position="top" data-tooltip="View Patrick on GitHub"
-              class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-                class="fa fa-github"></i><a
-                aria-label="Patrick on Github"
-                href="http://github.com/patrickmurphym" class="hoverline"
-                target="_blank">github.com/patrickmurphym</a></a>
-          </p>
-          <p>
-            <a aria-label="View Patrick on LinkedIn"
-              href="http://linkedin.com/in/patrick-james-murphy" target="_blank"
-              data-position="top" data-tooltip="View Patrick on LinkedIn"
-              class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-                class="fa fa-linkedin"></i><a aria-label="Patrick on LinkedIn"
-                href="http://linkedin.com/in/patrick-james-murphy"
-                class="hoverline"
-                target="_blank">linkedin.com/in/patrick-james-murphy</a></a>
-          </p>
+  <div class="section-divider"></div>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="section-label">06 — Contact</div>
+    <h2 class="section-title">Let's connect.</h2>
+
+    <div class="contact-grid reveal">
+      <a href="mailto:patrick.murphy@nyu.edu" class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">patrick.murphy@nyu.edu</div>
         </div>
-      </section>
-    </main>
+      </a>
 
-    <!-- typed.js -->
-    <script src="assets/vendor/typed.js/typed.min.js"></script>
-    <script type="text/javascript">
-    var typed = new Typed('.typing',{
-      strings: [
-        "A Pythonist", 
-        "An AI Enthusiast",
-        "An Analyst", 
-        "A Problem Solver",
-        "A Machine Learning Enthusiast",
-        "An R Programmer",
-        "An Analytical Thinker",
-        "An Applied Mathematician"
-      ],
-      loop: true,
-      typeSpeed: 80,
-      backSpeed: 40
-    });
-  </script>
+      <a href="http://linkedin.com/in/patrick-james-murphy" target="_blank" class="contact-item">
+        <div class="contact-icon">in</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">patrick-james-murphy</div>
+        </div>
+      </a>
 
-    <!-- jQuery-->
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <a href="https://github.com/patrickmurphym" target="_blank" class="contact-item">
+        <div class="contact-icon">gh</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">patrickmurphym</div>
+        </div>
+      </a>
 
-    <!-- Materialize - Compiled and minified JavaScript-->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
-    <script>
-    // Materialize - Initializers
-    $(document).ready(function () {
-      $(".scrollspy").scrollSpy()
-      // Initialize collapse button
-      $(".button-collapse").sideNav({
-        menuWidth: 190, // Default is 240
-        edge: "left", // Choose the horizontal origin
-        closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-      })
-    })
-  </script>
-  </body>
+      <a href="tel:+15162160686" class="contact-item">
+        <div class="contact-icon">☎</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+1 (516) 216-0686</div>
+        </div>
+      </a>
+    </div>
+  </section>
 
+</main>
+
+<script>
+// Typed text effect
+const phrases = [
+  "A Financial Engineer",
+  "A Python Developer",
+  "An ML Practitioner",
+  "A Credit Analyst",
+  "A Problem Solver",
+  "An Analytical Thinker"
+];
+let pi = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed-text');
+
+function type() {
+  const phrase = phrases[pi];
+  if (!deleting) {
+    el.textContent = phrase.slice(0, ++ci);
+    if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    el.textContent = phrase.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 40 : 80);
+}
+type();
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => obs.observe(el));
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar-nav a');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => navObs.observe(s));
+
+// Close mobile sidebar on nav click
+document.querySelectorAll('.sidebar-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+</script>
+</body>
 </html>
